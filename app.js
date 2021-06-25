@@ -16,30 +16,28 @@ function init() {
 
     // Camera
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.set(0, 0, 100)
-
+    camera.position.set(0, -10, 100)
     scene.add(camera);
 
     // Draw
-    const geometry = new THREE.ConeGeometry(20, 50, 10);
+    group = new THREE.Group()
+    for (let i = 1; i <= 5; i++) {
+        const geometry = new THREE.ConeGeometry(i * 2, i * 10, Math.pow(2, i));
+        const material = new THREE.PointsMaterial({ color: 'blue' });
+        const points = new THREE.Points(geometry, material);
+        group.add(points)
+    }
 
-    const wireframe = new THREE.WireframeGeometry(geometry);
-
-    const line = new THREE.LineSegments(wireframe);
-    
-  
-    // const geometry = new THREE.BufferGeometry();
-
-    line.material.depthTest = false;
-    line.material.opacity = 0.25;
-    line.material.transparent = true;
-
-    scene.add(line);
+    scene.add(group);
 }
 
 
 function animate() {
     requestAnimationFrame(animate);
+
+    // rote
+    group.rotation.y -= 0.005
+
     render();
 }
 
