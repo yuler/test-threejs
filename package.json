@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "serve": "parcel serve index.html"
+  },
+  "dependencies": {
+    "three": "^0.129.0"
+  }
+}
