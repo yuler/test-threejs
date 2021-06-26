@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-let camera, scene, renderer, group, material;
+let camera, scene, renderer, group, geometry, material;
 
 init();
 animate();
@@ -67,11 +67,9 @@ function init() {
 		{ x: -14.782072067260742, y: -15, z: 6.122934818267822 },
 		{ x: -11.313708305358887, y: -15, z: 11.313708305358887 },
 		{ x: -6.122934818267822, y: -15, z: 14.782072067260742 },
-		
 		],
 
 		[
-		{ x: -3.1214451789855957, y: -15, z: 15.692564010620117 },
 		{ x: 0, y: -25, z: 20 },
 		{ x: 3.901806354522705, y: -25, z: 19.615705490112305 },
 		{ x: 7.6536688804626465, y: -25, z: 18.477590560913086 },
@@ -103,8 +101,7 @@ function init() {
 		{ x: -14.142135620117188, y: -25, z: 14.142135620117188 },
 		{ x: -11.111404418945312, y: -25, z: 16.629392623901367 },
 		{ x: -7.6536688804626465, y: -25, z: 18.477590560913086 },
-		// TODO
-		{ x: -3.6536688804626465, y: -25, z: 20.477590560913086 },
+		{ x: -3.901806354522705, y: -25, z: 19.615705490112305 },
 		],
 	]
 
@@ -114,7 +111,7 @@ function init() {
 		vertices.push(x, y, z)
 	}
 
-	const geometry = new THREE.BufferGeometry();
+	geometry = new THREE.BufferGeometry();
 	geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
 	// Points
@@ -125,9 +122,50 @@ function init() {
 	group.add(points);
 
 	// Lines
-	// material = new THREE.LineBasicMaterial({ color: 'white' });
+	let lines;
+	material = new THREE.LineBasicMaterial({ color: 'white' });
+	const layer0 = pointArray[0]
+	const layer1 = pointArray[1]
+	const layer2 = pointArray[2]
+	const layer3 = pointArray[3]
+	const layer4 = pointArray[4]
+	const layer5 = pointArray[5]
+
+	for (let i = 0; i < 5; i++) {
+		const points = pointArray[i + 1].flat().map(p => [p.x, p.y, p.z]).flat()
+		geometry = new THREE.BufferGeometry();
+		geometry.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
+		lines = new THREE.LineLoop( geometry, material);
+		group.add(lines);
+	}
+
+	console.log(new THREE.Float32BufferAttribute(vertices, 3))
+	
+	const arr = pointArray.flat()
+	group.add(new THREE.Line3(new THREE.Vector3(arr[0].x, arr[0].y, arr[0].z), new THREE.Vector3(arr[1].x, arr[1].y, arr[1].z)))
+	// group.add(new THREE.Line3(vertices[0], vertices[2]))
+
+	// const points1 = [...layer0, ...layer1].flat().map(p => [p.x, p.y, p.z]).flat()
+	// geometry = new THREE.BufferGeometry();
+	// geometry.setAttribute('position', new THREE.Float32BufferAttribute(points1, 3));
+	// lines = new THREE.LineLoop( geometry, material );
+	// group.add(lines);
+
+	// const points2 = [layer2].flat().map(p => [p.x, p.y, p.z]).flat()
+	// geometry = new THREE.BufferGeometry();
+	// geometry.setAttribute('position', new THREE.Float32BufferAttribute(points2, 3));
+	// lines = new THREE.LineLoop( geometry, material );
+	// group.add(lines);
+
+	
+
+
 	// for (let i = 0; i < 6; i++) {
-	// 	const geometry = new THREE.Float32BufferAttribute(pointArray[i].flat(), 3)
+	// 	const layer = pointArray[i]
+	// 	const points = []
+		
+	// 	new THREE.Vector3(x, y, z)
+	// 	const geometry = new THREE.Float32BufferAttribute(.flat(), 3)
 	// 	const lines = new THREE.LineLoop(geometry, material)
 	// 	group.add(lines)
 	// }
