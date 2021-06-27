@@ -4,6 +4,5 @@
 
 ```bash
 yarn install
-yarn add parcel
 yarn serve
 ```
