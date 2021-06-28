@@ -132,11 +132,61 @@ function init() {
 	let lines;
 	material = new THREE.LineBasicMaterial({ color: 'white', transparent: true, opacity: 0.5 });
 
-	for (let i = 0; i < 5; i++) {
+	{
+		const curve = new THREE.EllipseCurve(
+			0,  0,       
+			3.65, 3.65,
+			0,  2 * Math.PI,
+			true,
+			0
+		)
+		
+		const points = curve.getPoints(50);
+		geometry = new THREE.BufferGeometry().setFromPoints(points);
+		geometry.rotateX(Math.PI / 2)
+		lines = new THREE.Line(geometry, material);
+		lines.translateY(15)
+		group.add(lines);
+	}
+
+	{
+		const curve = new THREE.EllipseCurve(
+			0,  0,
+			7.65, 7.65,
+			0,  2 * Math.PI,
+			true,
+			0
+		)
+		
+		const points = curve.getPoints(50);
+		geometry = new THREE.BufferGeometry().setFromPoints(points);
+		geometry.rotateX(Math.PI / 2)
+		lines = new THREE.Line(geometry, material);
+		lines.translateY(5)
+		group.add(lines);
+	}
+
+	{
+		const curve = new THREE.EllipseCurve(
+			0,  0,            // ax, aY
+			12, 12,           // xRadius, yRadius
+			0,  2 * Math.PI,  // aStartAngle, aEndAngle
+			true,            // aClockwise
+			0                // aRotation
+		)
+		const points = curve.getPoints(50);
+		geometry = new THREE.BufferGeometry().setFromPoints(points);
+		geometry.rotateX(Math.PI / 2)
+		lines = new THREE.Line(geometry, material);
+		lines.translateY(-5)
+		group.add(lines);
+	}
+
+	for (let i = 3; i < 5; i++) {
 		const points = pointArray[i + 1].flat().map(p => [p.x, p.y, p.z]).flat()
 		geometry = new THREE.BufferGeometry();
 		geometry.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
-		lines = new THREE.LineLoop( geometry, material);
+		lines = new THREE.LineLoop(geometry, material);
 		group.add(lines);
 	}
 
