@@ -190,15 +190,26 @@ function init() {
 		group.add(lines);
 	}
 
-    
-    let ps = [
-        ...pointArray[0].flat().map(p => [p.x, p.y, p.z]).flat(),
-        ...pointArray[1].flat().map(p => [p.x, p.y, p.z]).flat(),
-    ]
-    geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(ps, 3));
-    lines = new THREE.LineLoop( geometry, material);
-	group.add(lines);
+    {
+		let ps = [
+			...normalize(pointArray[0][0]),
+			...normalize(pointArray[1][0]),
+		]
+		geometry = new THREE.BufferGeometry();
+		geometry.setAttribute('position', new THREE.Float32BufferAttribute(ps, 3));
+		lines = new THREE.Line( geometry, material);
+		group.add(lines);
+	}
+	{
+		let ps = [
+			...normalize(pointArray[0][0]),
+			...normalize(pointArray[1][1]),
+		]
+		geometry = new THREE.BufferGeometry();
+		geometry.setAttribute('position', new THREE.Float32BufferAttribute(ps, 3));
+		lines = new THREE.Line( geometry, material);
+		group.add(lines);
+	}
     
     for (let i = 1; i < 5; i++) {
         for (let j = 0; j < pointArray[i].length; j++) {
