@@ -130,7 +130,7 @@ function init() {
 
 	// Lines
 	let lines;
-	material = new THREE.LineBasicMaterial({ color: 'white', transparent: true, opacity: 0.5 });
+	material = new THREE.LineDashedMaterial({ color: '#3a3f43', transparent: true, dashSize: 1, gapSize: 1 });
 
 	{
 		const curve = new THREE.EllipseCurve(
@@ -146,6 +146,7 @@ function init() {
 		geometry.rotateX(Math.PI / 2)
 		lines = new THREE.Line(geometry, material);
 		lines.translateY(15)
+		lines.computeLineDistances()
 		group.add(lines);
 	}
 
@@ -163,6 +164,7 @@ function init() {
 		geometry.rotateX(Math.PI / 2)
 		lines = new THREE.Line(geometry, material);
 		lines.translateY(5)
+		lines.computeLineDistances()
 		group.add(lines);
 	}
 
@@ -179,6 +181,7 @@ function init() {
 		geometry.rotateX(Math.PI / 2)
 		lines = new THREE.Line(geometry, material);
 		lines.translateY(-5)
+		lines.computeLineDistances()
 		group.add(lines);
 	}
 
@@ -187,10 +190,13 @@ function init() {
 		geometry = new THREE.BufferGeometry();
 		geometry.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
 		lines = new THREE.LineLoop(geometry, material);
+		lines.computeLineDistances()
 		group.add(lines);
 	}
 
-    {
+	material = new THREE.LineBasicMaterial({ color: '#3a3f43', transparent: true, opacity: 0.5 });
+
+	{
 		let ps = [
 			...normalize(pointArray[0][0]),
 			...normalize(pointArray[1][0]),
@@ -210,7 +216,29 @@ function init() {
 		lines = new THREE.Line( geometry, material);
 		group.add(lines);
 	}
-    
+
+	{
+		let ps = [
+			...normalize(pointArray[0][0]),
+			...normalize(pointArray[5][8]),
+		]
+		geometry = new THREE.BufferGeometry();
+		geometry.setAttribute('position', new THREE.Float32BufferAttribute(ps, 3));
+		lines = new THREE.Line( geometry, material);
+		scene.add(lines);
+	}
+
+	{
+		let ps = [
+			...normalize(pointArray[0][0]),
+			...normalize(pointArray[5][24]),
+		]
+		geometry = new THREE.BufferGeometry();
+		geometry.setAttribute('position', new THREE.Float32BufferAttribute(ps, 3));
+		lines = new THREE.Line( geometry, material);
+		scene.add(lines);
+	}
+
     for (let i = 1; i < 5; i++) {
         for (let j = 0; j < pointArray[i].length; j++) {
             let p0 = [
