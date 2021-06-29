@@ -217,6 +217,9 @@ function init() {
 		group.add(lines);
 	}
 
+	
+	material = new THREE.LineBasicMaterial({ color: '#3a3f43', transparent: true, opacity: 0.5 });
+
 	{
 		let ps = [
 			...normalize(pointArray[0][0]),
@@ -238,6 +241,8 @@ function init() {
 		lines = new THREE.Line( geometry, material);
 		scene.add(lines);
 	}
+
+	material = new THREE.LineBasicMaterial({ color: '#44fbea', transparent: true, opacity: 0.5 });
 
     for (let i = 1; i < 5; i++) {
         for (let j = 0; j < pointArray[i].length; j++) {
