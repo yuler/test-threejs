@@ -130,7 +130,7 @@ function init() {
 
 	// Lines
 	let lines;
-	material = new THREE.LineDashedMaterial({ color: '#3a3f43', transparent: true, dashSize: 1, gapSize: 1 });
+	material = new THREE.LineDashedMaterial({ color: '#44fbea', transparent: true, opacity: 0.5, dashSize: 1, gapSize: 1 });
 
 	{
 		const curve = new THREE.EllipseCurve(
@@ -194,7 +194,7 @@ function init() {
 		group.add(lines);
 	}
 
-	material = new THREE.LineBasicMaterial({ color: '#3a3f43', transparent: true, opacity: 0.5 });
+	material = new THREE.LineBasicMaterial({ color: '#44fbea', transparent: true, opacity: 0.5 });
 
 	{
 		let ps = [
